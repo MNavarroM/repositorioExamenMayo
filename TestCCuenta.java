@@ -7,42 +7,26 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class TestCCuenta {
+	private static BufferedReader dato;
+
 	public static void main(String[] args) {
-		BufferedReader dato = new BufferedReader(new InputStreamReader(
+		dato = new BufferedReader(new InputStreamReader(
 				System.in));
-		CCuenta cuenta1;
+		CCuenta marioNavarroMadrid;
 
 		int opcion = 0;
-		cuenta1 = new CCuenta("Rigoberta Piedra", "0000-6523-85-678912345",
+		marioNavarroMadrid = new CCuenta("Rigoberta Piedra", "0000-6523-85-678912345",
 				2500, 0);
 		do {
 			try {
-				System.out.println("MENU DE OPERACIONES");
-				System.out.println("-------------------");
-				System.out.println("1 - Ingresar");
-				System.out.println("2 - Retirar");
-				System.out.println("3 - Salir");
-				opcion = Integer.parseInt(dato.readLine());
-
+				mostrarMenu();
+				opcion = recogerOpcion(dato);
 				switch (opcion) {
 				case 1:
-					System.out.println("Indica cantidad a ingresar: ");
-					float ingresar = Integer.parseInt(dato.readLine());
-					try {
-						System.out.println("Ingreso en cuenta");
-						cuenta1.ingresar(ingresar);
-					} catch (Exception e) {
-						System.out.print("Fallo al ingresar");
-					}
+					ingresar(dato, marioNavarroMadrid);
 					break;
 				case 2:
-					System.out.println("Indica cantidad a retirar: ");
-					float retirar = Integer.parseInt(dato.readLine());
-					try {
-						cuenta1.retirar(retirar);
-					} catch (Exception e) {
-						System.out.print("Fallo al retirar");
-					}
+					retirar(dato, marioNavarroMadrid);
 					break;
 				case 3:
 					System.out.println("Aaaaaaaaaadios");
@@ -52,7 +36,41 @@ public class TestCCuenta {
 						null, ex);
 			}
 		} while (opcion != 3);
-		double saldoActual = cuenta1.estado();
-		System.out.println("Saldo actual: " + saldoActual);
+		System.out.println("Saldo actual: " + marioNavarroMadrid.estado());
+	}
+
+	private static void retirar(BufferedReader dato, CCuenta cuenta1) throws IOException {
+		System.out.println("Indica cantidad a retirar: ");
+		float retirar = recogerOpcion(dato);
+		try {
+			cuenta1.retirar(retirar);
+		} catch (Exception e) {
+			System.out.print("Fallo al retirar");
+		}
+	}
+
+	private static void ingresar(BufferedReader dato, CCuenta cuenta1) throws IOException {
+		System.out.println("Indica cantidad a ingresar: ");
+		float ingresar = recogerOpcion(dato);
+		try {
+			System.out.println("Ingreso en cuenta");
+			cuenta1.ingresando(ingresar);
+		} catch (Exception e) {
+			System.out.print("Fallo al ingresar");
+		}
+	}
+
+	private static int recogerOpcion(BufferedReader dato) throws IOException {
+		int opcion;
+		opcion = Integer.parseInt(dato.readLine());
+		return opcion;
+	}
+
+	private static void mostrarMenu() {
+		System.out.println("MENU DE OPERACIONES");
+		System.out.println("-------------------");
+		System.out.println("1 - Ingresar");
+		System.out.println("2 - Retirar");
+		System.out.println("3 - Salir");
 	}
 }

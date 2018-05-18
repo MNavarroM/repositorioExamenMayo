@@ -17,7 +17,7 @@ public class CCuenta {
 		return saldo;
 	}
 
-	public void ingresar(double cantidad) throws Exception {
+	public void ingresando(double cantidad) throws Exception {
 		if (cantidad < 0) {
 			throw new Exception("No se puede ingresar una cantidad negativa");
 		}
